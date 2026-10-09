@@ -115,9 +115,9 @@ def find_consecutive_students(data: pd.DataFrame) -> pd.DataFrame:
 
 if __name__ == "__main__":
     data = pd.read_csv("isu_fake_data.csv")
-    # data["surname"] = data["фио"].str.split(" ").str[0]
-    # data["name"] = data["фио"].str.split(" ").str[1]
-    # data["patronim"] = data["фио"].str.split(" ").str[0]
+    data["surname"] = data["фио"].str.split(" ").str[0]
+    data["name"] = data["фио"].str.split(" ").str[1]
+    data["patronim"] = data["фио"].str.split(" ").str[0]
     
     # Задача 1
     num_students, num_groups, fsuir = filter_fsuir_students(data)
