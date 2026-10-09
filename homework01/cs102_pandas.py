@@ -16,7 +16,7 @@ def filter_fsuir_students(data: pd.DataFrame) -> Tuple[int, int, pd.DataFrame]:
 
 
 # Задача 2
-def find_homonymous_students(df: pd.DataFrame) -> Tuple[bool, int, pd.Series, str]:
+def find_homonymous_students(data: pd.DataFrame) -> Tuple[bool, int, pd.Series, str]:
     """
     Проверяет наличие однофамильцев на ФСУиР, их количество, распределение по курсам
     и определяет группу с наибольшим числом однофамильцев.
@@ -33,7 +33,7 @@ def find_homonymous_students(df: pd.DataFrame) -> Tuple[bool, int, pd.Series, st
         return 0, pd.Series(dtype=int), "Нет однофамильцев"
     course_count = surname["курс"].value_counts()
     top_group = surname["группа"].value_counts().idxmax()
-    return total_count, course_stats, top_group
+    return total_count, course_count, top_group
     
 
 # Задача 3
@@ -117,7 +117,7 @@ if __name__ == "__main__":
     data = pd.read_csv("isu_fake_data.csv")
     data["surname"] = data["фио"].str.split(" ").str[0]
     data["name"] = data["фио"].str.split(" ").str[1]
-    data["patronim"] = data["фио"].str.split(" ").str[0]
+    data["patronim"] = data["фио"].str.split(" ").str[2]
     
     # Задача 1
     num_students, num_groups, fsuir = filter_fsuir_students(data)
