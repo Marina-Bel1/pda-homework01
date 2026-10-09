@@ -26,7 +26,7 @@ def find_homonymous_students(df: pd.DataFrame) -> Tuple[bool, int, pd.Series, st
      - серию с числом однофамильцев по курсам
      - группу с максимальным числом однофамильцев
     """
- surname = fsuir[fsuir.duplicated(subset=["surname"], keep=False)]
+ surname = df[df.duplicated(subset=["surname"], keep=False)]
     total_count = len(surname)
     if total_count == 0:
         return False, 0, pd.Series(dtype=int), "Нет однофамильцев"
