@@ -9,14 +9,14 @@ def filter_fsuir_students(data: pd.DataFrame) -> Tuple[int, int, pd.DataFrame]:
     Создает подвыборку студентов факультета систем управления и робототехники (ФСУиР).
     Возвращает количество таких студентов, количество уникальных групп и отфильтрованный датасет.
     """
-    fsuir = data[data["факультет"] == "ФСУиР"]
+    fsuir = data[data["факультет"] == "факультет систем управления и робототехники"]
     num_students = len(fsuir)
     num_groups = fsuir["группа"].nunique()
     return num_students, num_groups, fsuir
 
 
 # Задача 2
-def find_homonymous_students(data: pd.DataFrame) -> Tuple[bool, int, pd.Series, str]:
+def find_homonymous_students(df: pd.DataFrame) -> Tuple[bool, int, pd.Series, str]:
     """
     Проверяет наличие однофамильцев на ФСУиР, их количество, распределение по курсам
     и определяет группу с наибольшим числом однофамильцев.
@@ -26,14 +26,14 @@ def find_homonymous_students(data: pd.DataFrame) -> Tuple[bool, int, pd.Series, 
      - серию с числом однофамильцев по курсам
      - группу с максимальным числом однофамильцев
     """
-    fsuir = data[data["факультет"] == "ФСУиР"]
-    surname = fsuir[fsuir.duplicated(subset=["surname"], keep=False)]
+ surname = fsuir[fsuir.duplicated(subset=["surname"], keep=False)]
     total_count = len(surname)
     if total_count == 0:
-        return 0, pd.Series(dtype=int), "Нет однофамильцев"
+        return False, 0, pd.Series(dtype=int), "Нет однофамильцев"
+
     course_count = surname["курс"].value_counts()
     top_group = surname["группа"].value_counts().idxmax()
-    return total_count, course_count, top_group
+    return True, total_count, course_count, top_group
     
 
 # Задача 3
