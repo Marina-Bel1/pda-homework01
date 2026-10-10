@@ -85,7 +85,21 @@ def faculty_statistics(data: pd.DataFrame) -> Tuple[pd.DataFrame, Tuple[str, int
     Подсчитывает количество студентов на каждом факультете,
     а также определяет факультеты с максимальным и минимальным числом студентов.
     """
-    pass
+    faculty_col = 'факультет'
+        
+    counts_series = data[faculty_col].value_counts()
+    faculty_counts_df = counts_series.reset_index()
+    faculty_counts_df.columns = ['Факультет', 'Количество студентов']
+
+    max_faculty_name = counts_series.idxmax()
+    max_count = counts_series.max()
+    max_faculty = (max_faculty_name, max_count)
+    
+    min_faculty_name = counts_series.idxmin()
+    min_count = counts_series.min()
+    min_faculty = (min_faculty_name, min_count)
+    
+    return faculty_counts_df, max_faculty, min_faculty
 
 
 # Задача 5
