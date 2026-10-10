@@ -143,7 +143,7 @@ def most_popular_name(data: pd.DataFrame) -> Tuple[str, str, str, int, float]:
     # Так как студенты одной группы учатся на одном факультете и курсе, беру первую строку этой группы
     group_info = data[data[group_col] == name_group].iloc[0]
     faculty = group_info[faculty_col]
-    course = int(group_info[course_col])
+    course = int(str(group_info[course_col]).split('-')[0])
     
     name_ratio = round(len(students_with_popular_name) / len(data), 2)
     
@@ -193,9 +193,10 @@ if __name__ == "__main__":
     print(f"На каждом курсе: {homonyms_per_course}")
     
     # Задача 3
-    students_without_patronym, gender_counts = analyze_patronyms(fsuir)
+    students_without_patronym,foreign_or_unclear, gender_counts = analyze_patronyms(fsuir)
     print(f"Студентов без отчества: {students_without_patronym}")
     print("Распределение по полу:", gender_counts)
+    print("Иностранные студенты",foreign_or_unclear)
     
     # Задача 4
     faculty_counts, max_faculty, min_faculty = faculty_statistics(data)
