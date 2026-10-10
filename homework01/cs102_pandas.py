@@ -155,7 +155,15 @@ def find_students_with_name_starting_P(data: pd.DataFrame) -> pd.DataFrame:
     """
     Находит студентов, чье имя встречается ровно один раз и начинается на "П". Выводит их ФИО, факультет и курс.
     """
-    pass
+    name_counts = data['name'].value_counts()
+    
+    unique_names = name_counts[name_counts == 1].index
+    
+    mask = data['name'].isin(unique_names) & data['name'].str.startswith(('П', 'п'))
+    
+    result_df = data.loc[mask, ['фио', 'факультет', 'курс']]
+    
+    return result_df
 
 
 # Задача 8
