@@ -76,7 +76,7 @@ def analyze_patronyms(df: pd.DataFrame) -> Tuple[int, pd.Series]:
         'female': all_counts.get('female', 0)
     }
 
-    return students_without_patronym, foreign_or_unclear, gender_count
+    return students_without_patronym, foreign_or_unclear, gender_counts
 
 
 # Задача 4
