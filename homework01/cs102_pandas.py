@@ -64,7 +64,7 @@ def analyze_patronyms(df: pd.DataFrame) -> Tuple[int, pd.Series]:
      - количество студентов без отчества
      - серию с распределением студентов по полу 
     """
-    patronym_col = 'Отчество'
+    patronym_col = 'patronim'
     df['gender_category'] = df[patronym_col].apply(gender_identification)
     all_counts = df['gender_category'].value_counts().to_dict()
     
