@@ -219,9 +219,9 @@ def find_consecutive_students(data: pd.DataFrame) -> pd.DataFrame:
         isu_values = window[isu_col].tolist()
         
         if isu_values[4] - isu_values[0] == 4 and len(set(isu_values)) == 5:
-            return window[[fio_col, faculty_col, course_col, group_col]]
+            return window[[isu_col,fio_col, faculty_col, course_col, group_col]]
             
-    return pd.DataFrame(columns=[fio_col, faculty_col, course_col, group_col])
+    return pd.DataFrame(columns=[isu_col,fio_col, faculty_col, course_col, group_col])
 
 
 if __name__ == "__main__":
