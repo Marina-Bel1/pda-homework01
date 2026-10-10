@@ -206,7 +206,22 @@ def find_consecutive_students(data: pd.DataFrame) -> pd.DataFrame:
     Находит первых 5 студентов, которым номера были присвоены подряд.
     Выводит их ФИО, факультет, курс и номер группы.
     """
-    pass
+    isu_col = 'ису'
+    fio_col = 'фио'
+    faculty_col = 'факультет'
+    course_col = 'курс'
+    group_col = 'группа'
+    
+    df_sorted = data.sort_values(by=isu_col).reset_index(drop=True)
+    
+    for i in range(len(df_sorted) - 4):
+        window = df_sorted.iloc[i:i+5]
+        isu_values = window[isu_col].tolist()
+        
+        if isu_values[4] - isu_values[0] == 4 and len(set(isu_values)) == 5:
+            return window[[fio_col, faculty_col, course_col, group_col]]
+            
+    return pd.DataFrame(columns=[fio_col, faculty_col, course_col, group_col])
 
 
 if __name__ == "__main__":
