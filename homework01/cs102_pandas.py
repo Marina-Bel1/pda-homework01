@@ -175,7 +175,7 @@ def highest_avg_grade_faculty(data: pd.DataFrame) -> Tuple[str, str, int]:
     """
     course_col = 'курс'
     faculty_col = 'факультет'
-    grade_col = 'средний балл'
+    grade_col = 'средний_балл'
     patronym_col = 'patronim'  
   
     third_course = data[course_col].astype(str).str.startswith('3')
