@@ -129,7 +129,25 @@ def most_popular_name(data: pd.DataFrame) -> Tuple[str, str, str, int, float]:
      3. факультет
      4. доля
     """
-    pass
+    name_col = 'name'
+    group_col = 'группа'
+    faculty_col = 'факультет'
+    course_col = 'курс'
+    
+    popular_name = data[name_col].value_counts().idxmax()
+    
+    students_with_popular_name = data[data[name_col] == popular_name]
+    
+    name_group = students_with_popular_name[group_col].value_counts().idxmax()
+    
+    # Так как студенты одной группы учатся на одном факультете и курсе, беру первую строку этой группы
+    group_info = data[data[group_col] == name_group].iloc[0]
+    faculty = group_info[faculty_col]
+    course = int(group_info[course_col])
+    
+    name_ratio = round(len(students_with_popular_name) / len(data), 2)
+    
+    return popular_name, name_group, faculty, course, name_ratio
 
 
 # Задача 7
