@@ -41,7 +41,20 @@ def gender_identification(patronym: str) -> str:
     """
     Определяет пол по отчеству. Возвращает пол: female/male/unknown.
     """
-    pass
+    if pd.isna(patronym) or not isinstance(patronym, str) or not patronym.strip():
+         return 'empty'
+    
+    patronym_lower = patronym.lower().strip()
+    
+    male_endings = ('ович', 'евич', 'ич')
+    female_endings = ('овна', 'евна', 'ична', 'инична')
+    
+    if patronym_lower.endswith(male_endings):
+        return 'male'
+    elif patronym_lower.endswith(female_endings):
+        return 'female'
+    else:
+        return 'other'
 
 
 def analyze_patronyms(df: pd.DataFrame) -> Tuple[int, pd.Series]:
@@ -51,7 +64,19 @@ def analyze_patronyms(df: pd.DataFrame) -> Tuple[int, pd.Series]:
      - количество студентов без отчества
      - серию с распределением студентов по полу 
     """
-    pass
+    patronym_col = 'Отчество'
+    df['gender_category'] = df[patronym_col].apply(gender_identification)
+    all_counts = df['gender_category'].value_counts().to_dict()
+    
+    students_without_patronym = all_counts.get('empty', 0)
+    foreign_or_unclear = all_counts.get('other', 0)
+    
+    gender_counts = {
+        'male': all_counts.get('male', 0),
+        'female': all_counts.get('female', 0)
+    }
+
+    return students_without_patronym, foreign_or_unclear, gender_count
 
 
 # Задача 4
