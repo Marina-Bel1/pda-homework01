@@ -108,7 +108,14 @@ def course_statistics(data: pd.DataFrame) -> Tuple[pd.Series, pd.Series]:
     Вычисляет среднее и медианное число студентов на каждом курсе.
     Возвращает две серии с результатами: сначала средние, потом медиана.
     """
-    pass
+    course_col = 'курс'
+    group_col = 'группа' 
+    group_sizes = data.groupby([course_col, group_col]).size().reset_index(name='count')
+    
+    mean_students = group_sizes.groupby(course_col)['count'].mean()
+    median_students = group_sizes.groupby(course_col)['count'].median()
+    
+    return mean_students, median_students
 
 
 # Задача 6
