@@ -173,7 +173,31 @@ def highest_avg_grade_faculty(data: pd.DataFrame) -> Tuple[str, str, int]:
     Определяет пол, средний балл котого выше.
     Сначала возвращает факультет, затем пол, затем балл.
     """
-    pass
+    course_col = 'курс'
+    faculty_col = 'факультет'
+    grade_col = 'средний балл'
+    patronym_col = 'patronim'  
+  
+    third_course = data[course_col].astype(str).str.startswith('3')
+    data_3rd_course = data[third_course].copy() 
+    
+    faculty_avg_grades = data_3rd_course.groupby(faculty_col)[grade_col].mean()
+    best_faculty = faculty_avg_grades.idxmax()
+    
+    best_fac_students = data_3rd_course[data_3rd_course[faculty_col] == best_faculty].copy()
+    
+    best_fac_students['gender'] = best_fac_students[patronym_col].apply(gender_identification)
+    valid_genders = best_fac_students['gender'].isin(['male', 'female'])
+    valid_students = best_fac_students[valid_genders]
+    
+    gender_avg_grades = valid_students.groupby('gender')[grade_col].mean()
+    
+    
+    best_gender = gender_avg_grades.idxmax()
+    best_grade_exact = gender_avg_grades.max()
+    best_grade_rounded = int(round(best_grade_exact))
+    
+    return best_faculty, best_gender, best_grade_rounded
 
 
 # Задача 9
